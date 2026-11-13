@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#414b58" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <meta name="description" content="ArduCraft: aprende Arduino desde cero, paso a paso, con tus propios sensores y proyectos." />
+    <title>ArduCraft</title>
+  </head>
+  <body>
+<script>(()=>{const y=new TextEncoder,x=new TextDecoder,v=e=>e.trim().toLocaleLowerCase("es");async function f(e,t){const r=await crypto.subtle.digest("SHA-256",y.encode(`pinquest
+${v(e)}`)),n=await crypto.subtle.importKey("raw",y.encode(t.trim()),"PBKDF2",!1,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",hash:"SHA-256",salt:r,iterations:6e5},n,{name:"AES-GCM",length:256},!1,["encrypt","decrypt"])}async function m(e,t){return new Uint8Array(await new Response(new Blob([e]).stream().pipeThrough(t)).arrayBuffer())}async function T(e,t,r){const n=await f(t,r),a=await m(JSON.stringify(e),new CompressionStream("gzip")),o=crypto.getRandomValues(new Uint8Array(12)),i=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:o},n,a)),s=new Uint8Array(12+i.length);return s.set(o),s.set(i,12),s}async function g(e,t){let r;try{r=await crypto.subtle.decrypt({name:"AES-GCM",iv:e.slice(0,12)},t,e.slice(12))}catch{return null}return JSON.parse(x.decode(await m(r,new DecompressionStream("gzip"))))}const S="pinquest-access",d="keys",l="app";function u(e,t){return new Promise((r,n)=>{const a=indexedDB.open(S,1);a.onupgradeneeded=()=>a.result.createObjectStore(d),a.onerror=()=>n(a.error),a.onsuccess=()=>{const o=a.result,i=t(o.transaction(d,e).objectStore(d));i.onsuccess=()=>{o.close(),r(i.result)},i.onerror=()=>{o.close(),n(i.error)}}})}const A=()=>u("readonly",e=>e.get(l)),E=e=>u("readwrite",t=>t.put(e,l)),b=()=>u("readwrite",e=>e.delete(l)),B=`
+:root{color-scheme:light dark;--top:#fbfbfd;--bg:#e3e6ea;--card:#ffffff;--ink:#1d1d1f;--dim:#4c5056;--line:#d4d8dd;--btn:#0e5f67;--btn-ink:#fff;--bad:#a8231b}
+@media (prefers-color-scheme:dark){:root{--top:#414b58;--bg:#2a313b;--card:#333c48;--ink:#f3f5f7;--dim:#d0d6dd;--line:#4e5967;--btn:#86dccd;--btn-ink:#10312f;--bad:#ffbd92}}
+html,body{margin:0;min-height:100%;background:linear-gradient(160deg,var(--top),var(--bg)) fixed var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.gate{box-sizing:border-box;min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px 16px}
+.gate form{box-sizing:border-box;width:100%;max-width:360px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:14px}
+.gate h1{margin:0;font-size:28px;line-height:1.2}
+.gate p{margin:0;color:var(--dim)}
+.gate label{display:grid;gap:4px;font-weight:600}
+.gate input[type=text],.gate input[type=password]{box-sizing:border-box;width:100%;font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:44px}
+.gate .check{display:flex;gap:8px;align-items:center;font-weight:400}
+.gate button{font:inherit;font-weight:600;min-height:44px;border:0;border-radius:8px;background:var(--btn);color:var(--btn-ink);cursor:pointer}
+.gate button:disabled{opacity:.6;cursor:progress}
+.gate .error{color:var(--bad);font-weight:600}
+.gate .error:empty{display:none}
+`;let c=null;async function h(){if(c)return c;const e=await fetch("./app-8724b53ca9e2.bin");if(!e.ok)throw new Error(String(e.status));return c=new Uint8Array(await e.arrayBuffer()),c}async function w(e){document.getElementById("gate-style")?.remove();const t=document.createElement("style");t.textContent=e.css,document.head.append(t),document.body.innerHTML=e.body,window.pinquestLock=async()=>{await b().catch(()=>{}),location.reload()},await import(URL.createObjectURL(new Blob([e.js],{type:"text/javascript"})))}function p(e=""){document.body.innerHTML=`<main class="gate"><form autocomplete="on">
+    <h1>ArduCraft</h1>
+    <p>Esta app es privada. Entra con tu usuario y tu contrase\xF1a.</p>
+    <label>Usuario<input type="text" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+    <label>Contrase\xF1a<input type="password" name="password" autocomplete="current-password" required></label>
+    <label class="check"><input type="checkbox" name="remember" checked>Recordarme en este dispositivo</label>
+    <p class="error" role="alert"></p>
+    <button type="submit">Entrar</button>
+  </form></main>`;const t=document.querySelector("form"),r=t.querySelector(".error"),n=t.querySelector("button");r.textContent=e,t.querySelector("input[name=username]").focus(),t.addEventListener("submit",a=>{a.preventDefault();const o=new FormData(t);r.textContent="",n.disabled=!0,n.textContent="Comprobando\u2026",(async()=>{try{const i=await f(String(o.get("username")),String(o.get("password"))),s=await g(await h(),i);if(!s){r.textContent="El usuario o la contrase\xF1a no son correctos.";return}o.get("remember")&&await E(i).catch(()=>{}),await w(s)}catch{r.textContent="No se ha podido abrir la app. Si es la primera vez en este dispositivo, necesitas conexi\xF3n."}finally{n.disabled=!1,n.textContent="Entrar"}})()})}async function k(){const e=document.createElement("style");e.id="gate-style",e.textContent=B,document.head.append(e),"serviceWorker"in navigator&&navigator.serviceWorker.register("./sw.js").catch(()=>{});const t=await A().catch(()=>{});if(!t){p();return}try{const r=await g(await h(),t);if(r){await w(r);return}await b().catch(()=>{}),p()}catch{p("No se ha podido abrir la app. Si es la primera vez en este dispositivo, necesitas conexi\xF3n.")}}typeof document<"u"&&k();})();
+</script>
+</body>
+</html>
